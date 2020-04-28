@@ -66,7 +66,7 @@ App {
 
 	FileIO {
 		id: onkyoSettingsFile
-		source: "file:///qmf/qml/apps/onkyo/config.json"
+		source: "file:///mnt/data/tsc/onkyo_userSettings.json"
  	}
 
 
@@ -270,7 +270,7 @@ App {
 			"tmpSleep" : tmpSleep
 		}
   		var doc3 = new XMLHttpRequest();
-   		doc3.open("PUT", "file:///qmf/qml/apps/onkyo/config.json");
+   		doc3.open("PUT", "file:////mnt/data/tsc/onkyo_userSettings.json");
    		doc3.send(JSON.stringify(setJson));
 	}
 }
