@@ -1,1 +1,0 @@
-Please install the Onkyo receiver in Domoticz and get the IDX's from the devices tab. After that goto Toon's setup and fill in all data.
