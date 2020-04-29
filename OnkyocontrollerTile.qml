@@ -7,7 +7,7 @@ import BasicUIControls 1.0
 import qb.components 1.0
 
 Tile {
-	id: onkyoTile
+	id: onkyocontrollerTile
 
 	property bool dimState: screenStateController.dimmedColors
 
@@ -477,7 +477,7 @@ Tile {
     		MouseArea{
          		id: buttonMouseArea11
          		anchors.fill: parent 
-         		onClicked: {app.onkyoConfigScreen.show();}
+         		onClicked: {app.onkyocontrollerConfigScreen.show();}
      		}
     		visible: !dimState  && !app.actPower
 
