@@ -1,5 +1,5 @@
 //
-// Onkyocontroller v1.0.0 by Oepi-Loepi
+// Onkyocontroller v1.0.5 by Oepi-Loepi
 //
 //domoticzURL1 : "http://192.168.10.185:8080" ,,  idxOnOff : "94" ,, idxMS : "92" ,,  idxCOM : "95" ,, idxTitle : "101"  ,, idxPT : "102"  ,, idxArtist : "104"
 
@@ -18,6 +18,7 @@ App {
 
 	property OnkyocontrollerConfigScreen onkyocontrollerConfigScreen
 
+	property string	statnrHEX
 	property string actualArtist
 	property string actualTitle
 	property string actualPlaytime
@@ -39,6 +40,11 @@ App {
 	property string idxTitle : "101"
 	property string idxPT : "102"
 	property string idxArtist : "104"
+	property string radioStation1nr : "03"
+	property string radioStation2nr : "04"
+	property string radioStation3nr : "06"
+	property string radioStation4nr : "08"
+
 	property string radioStation1 : "R10"
 	property string radioStation2 : "Q"
 	property string radioStation3 : "3FM"
@@ -237,10 +243,17 @@ App {
 			idxTitle = onkyocontrollerSettingsJson['idxTitle'];
 			idxPT = onkyocontrollerSettingsJson['idxPT'];
 			idxArtist = onkyocontrollerSettingsJson['idxArtist'];
+
+			radioStation1nr = onkyocontrollerSettingsJson['radioStation1nr'];
+			radioStation2nr = onkyocontrollerSettingsJson['radioStation2nr'];
+			radioStation3nr = onkyocontrollerSettingsJson['radioStation3nr'];
+			radioStation4nr = onkyocontrollerSettingsJson['radioStation4nr'];
+
 			radioStation1 = onkyocontrollerSettingsJson['radioStation1'];
 			radioStation2 = onkyocontrollerSettingsJson['radioStation2'];
 			radioStation3 = onkyocontrollerSettingsJson['radioStation3'];
 			radioStation4 = onkyocontrollerSettingsJson['radioStation4'];
+
 		
 		} catch(e) {
 		}
@@ -263,6 +276,12 @@ App {
 			"idxTitle" : idxTitle,
 			"idxPT" : idxPT,
 			"idxArtist" : idxArtist,
+
+			"radioStation1nr" : radioStation1nr,
+			"radioStation2nr" : radioStation2nr,
+			"radioStation3nr" : radioStation3nr,
+			"radioStation4nr" : radioStation4nr,
+
 			"radioStation1" : radioStation1,
 			"radioStation2" : radioStation2,
 			"radioStation3" : radioStation3,
@@ -273,4 +292,5 @@ App {
    		doc3.open("PUT", "file:////mnt/data/tsc/onkyocontroller_userSettings.json");
    		doc3.send(JSON.stringify(setJson));
 	}
+
 }
