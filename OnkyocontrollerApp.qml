@@ -1,5 +1,5 @@
 //
-// Onkyo v1.0.0 by Oepi-Loepi
+// Onkyocontroller v1.0.0 by Oepi-Loepi
 //
 //domoticzURL1 : "http://192.168.10.185:8080" ,,  idxOnOff : "94" ,, idxMS : "92" ,,  idxCOM : "95" ,, idxTitle : "101"  ,, idxPT : "102"  ,, idxArtist : "104"
 
@@ -10,13 +10,13 @@ import ScreenStateController 1.0
 import FileIO 1.0
 
 App {
-	id: onkyoApp
+	id: onkyocontrollerApp
 
-	property url tileUrl : "OnkyoTile.qml"
+	property url tileUrl : "OnkyocontrollerTile.qml"
 	property url thumbnailIcon: "qrc:/tsc/onkyo-resize.png"
-	property url onkyoConfigScreenUrl : "OnkyoConfigScreen.qml"
+	property url onkyocontrollerConfigScreenUrl : "OnkyocontrollerConfigScreen.qml"
 
-	property OnkyoConfigScreen onkyoConfigScreen
+	property OnkyocontrollerConfigScreen onkyocontrollerConfigScreen
 
 	property string actualArtist
 	property string actualTitle
@@ -47,7 +47,7 @@ App {
 
 
 	// user settings from config file
-	property variant onkyoSettingsJson : {
+	property variant onkyocontrollerSettingsJson : {
 		'domoticzURL1': "",
 		'idxOnOff': "",
 		'idxMS': "",
@@ -65,14 +65,14 @@ App {
 
 
 	FileIO {
-		id: onkyoSettingsFile
-		source: "file:///mnt/data/tsc/onkyo_userSettings.json"
+		id: onkyocontrollerSettingsFile
+		source: "file:///mnt/data/tsc/onkyocontroller_userSettings.json"
  	}
 
 
 	function init() {
 		registry.registerWidget("tile", tileUrl, this, null, {thumbLabel: qsTr("Onkyo"), thumbIcon: thumbnailIcon, thumbCategory: "general", thumbWeight: 30, baseTileWeight: 10, thumbIconVAlignment: "center"});
-		registry.registerWidget("screen", onkyoConfigScreenUrl, this, "onkyoConfigScreen");
+		registry.registerWidget("screen", onkyocontrollerConfigScreenUrl, this, "onkyocontrollerConfigScreen");
 	}
 	
 	Connections {
@@ -223,24 +223,24 @@ App {
 
 	Component.onCompleted: {
 		try {
-			onkyoSettingsJson = JSON.parse(onkyoSettingsFile.read());
-			if (onkyoSettingsJson['tmpSleep'] == "Yes") {
+			onkyocontrollerSettingsJson = JSON.parse(onkyocontrollerSettingsFile.read());
+			if (onkyocontrollerSettingsJson['tmpSleep'] == "Yes") {
 				enableSleep = true
 			} else {
 				enableSleep = false
 			}
 
-			domoticzURL1 = onkyoSettingsJson['domoticzURL1'];
-			idxOnOff = onkyoSettingsJson['idxOnOff'];
-			idxMS = onkyoSettingsJson['idxMS'];
-			idxCOM = onkyoSettingsJson['idxCOM'];
-			idxTitle = onkyoSettingsJson['idxTitle'];
-			idxPT = onkyoSettingsJson['idxPT'];
-			idxArtist = onkyoSettingsJson['idxArtist'];
-			radioStation1 = onkyoSettingsJson['radioStation1'];
-			radioStation2 = onkyoSettingsJson['radioStation2'];
-			radioStation3 = onkyoSettingsJson['radioStation3'];
-			radioStation4 = onkyoSettingsJson['radioStation4'];
+			domoticzURL1 = onkyocontrollerSettingsJson['domoticzURL1'];
+			idxOnOff = onkyocontrollerSettingsJson['idxOnOff'];
+			idxMS = onkyocontrollerSettingsJson['idxMS'];
+			idxCOM = onkyocontrollerSettingsJson['idxCOM'];
+			idxTitle = onkyocontrollerSettingsJson['idxTitle'];
+			idxPT = onkyocontrollerSettingsJson['idxPT'];
+			idxArtist = onkyocontrollerSettingsJson['idxArtist'];
+			radioStation1 = onkyocontrollerSettingsJson['radioStation1'];
+			radioStation2 = onkyocontrollerSettingsJson['radioStation2'];
+			radioStation3 = onkyocontrollerSettingsJson['radioStation3'];
+			radioStation4 = onkyocontrollerSettingsJson['radioStation4'];
 		
 		} catch(e) {
 		}
@@ -270,7 +270,7 @@ App {
 			"tmpSleep" : tmpSleep
 		}
   		var doc3 = new XMLHttpRequest();
-   		doc3.open("PUT", "file:////mnt/data/tsc/onkyo_userSettings.json");
+   		doc3.open("PUT", "file:////mnt/data/tsc/onkyocontroller_userSettings.json");
    		doc3.send(JSON.stringify(setJson));
 	}
 }

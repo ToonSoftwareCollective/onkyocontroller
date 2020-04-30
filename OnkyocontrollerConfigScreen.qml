@@ -3,8 +3,8 @@ import qb.components 1.0
 import BasicUIControls 1.0;
 
 Screen {
-	id: onkyoConfigScreen
-	screenTitle: "Onkyo app Setup"
+	id: onkyocontrollerConfigScreen
+	screenTitle: "Onkyocontroller app Setup"
 
 	function saveDomoticzURL1(text) {
 		if (text) {
