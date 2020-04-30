@@ -325,7 +325,7 @@ function makeHex(statnr) {
 ////////////////////////////////////////////////////////////////////////
 	Text {
 		id: myLabel229
-		text: "Radio Nr (2 number (HEX) \"01\" to \"20\"):"
+		text: "Radio Nr (2 number \"01\" to \"09\"):"
 		font.pixelSize:  isNxt ? 20 : 16
 		font.family: qfont.regular.name
 
@@ -341,7 +341,7 @@ function makeHex(statnr) {
 		id: radioStation1nr
 		width: (parent.width*0.37) - 40		
 		height: 35
-		leftTextAvailableWidth: 230
+		leftTextAvailableWidth: 200
 		leftText: "Radiostation 1 Nr"
 
 		anchors {
@@ -351,7 +351,7 @@ function makeHex(statnr) {
 		}
 
 		onClicked: {
-			qkeyboard.open("Radiostation 1 Nr \"01\" to \"20\"", radioStation1nr.inputText, saveradioStation1nr)
+			qkeyboard.open("Radiostation 1 Nr \"01\" to \"09\"", radioStation1nr.inputText, saveradioStation1nr)
 		}
 	}
 
@@ -359,7 +359,8 @@ function makeHex(statnr) {
 		id: radioStation2nr
 		width: (parent.width*0.37) - 40
 		height: 35
-		leftTextAvailableWidth: 230
+		leftTextAvailableWidth: 200
+
 		leftText: "Radiostation 2 Nr"
 
 		anchors {
@@ -369,7 +370,7 @@ function makeHex(statnr) {
 		}
 
 		onClicked: {
-			qkeyboard.open("Radiostation 2 Nr \"01\" to \"20\"", radioStation2nr.inputText, saveradioStation2nr)
+			qkeyboard.open("Radiostation 2 Nr \"01\" to \"09\"", radioStation2nr.inputText, saveradioStation2nr)
 		}
 	}
 
@@ -377,7 +378,7 @@ function makeHex(statnr) {
 		id: radioStation3nr
 		width: (parent.width*0.37) - 40
 		height: 35
-		leftTextAvailableWidth: 230
+		leftTextAvailableWidth: 200
 		leftText: "Radiostation 3 Nr"
 
 		anchors {
@@ -387,7 +388,7 @@ function makeHex(statnr) {
 		}
 
 		onClicked: {
-			qkeyboard.open("Radiostation 3 Nr \"01\" to \"20\"", radioStation3nr.inputText, saveradioStation3nr)
+			qkeyboard.open("Radiostation 3 Nr \"01\" to \"09\"", radioStation3nr.inputText, saveradioStation3nr)
 		}
 	}
 
@@ -396,7 +397,7 @@ function makeHex(statnr) {
 		id: radioStation4nr
 		width: (parent.width*0.37) - 40
 		height: 35
-		leftTextAvailableWidth: 230
+		leftTextAvailableWidth: 200
 		leftText: "Radiostation 4 Nr"
 
 		anchors {
@@ -406,7 +407,7 @@ function makeHex(statnr) {
 		}
 
 		onClicked: {
-			qkeyboard.open("Radiostation 4 Nr \"01\" to \"20\"", radioStation4nr.inputText, saveradioStation4nr)
+			qkeyboard.open("Radiostation 4 Nr \"01\" to \"09\"", radioStation4nr.inputText, saveradioStation4nr)
 		}
 	}
 ///////////////////////////////////////////////////////////////////////////
