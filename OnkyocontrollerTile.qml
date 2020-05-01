@@ -15,11 +15,14 @@ Tile {
 	Rectangle {
      		id: simplebutton
      		color: "grey"
-     		width: 220; height: 20
+     		width: isNxt ? 280 : 220; height: isNxt ? 25 : 20
+		
 		radius: 4
      		Text{
          		id: buttonLabel
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
          		text: "POWER ON"
      		}
 
@@ -40,11 +43,13 @@ Tile {
 	Rectangle {
      		id: simplebutton2
      		color: "grey"
-     		width: 220; height: 20
+     		width: isNxt ? 275 : 220; height: isNxt ? 25 : 20
 		radius: 4
      		Text{
          		id: buttonLabel2
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
          		text: "POWER OFF"
      		}
 		anchors {
@@ -64,18 +69,21 @@ Tile {
 	Rectangle {
      		id: simplebutton3
      		color: "blue"
-     		width: 53; height: 42 
+		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42
 		radius: 4    		
 		Text{
          		id: buttonLabel3
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
+
          		text: "RADIO"
      		}
 		anchors {
 			top: simplebutton2.bottom
 			topMargin: 3
 			left: parent.left
-			leftMargin:  5 		
+			leftMargin:  isNxt ? 8 : 5 		
 		}
 
     		MouseArea{
@@ -89,18 +97,21 @@ Tile {
 	Rectangle {
      		id: simplebutton4
      		color: "green"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42
 		radius: 4    		     		
 		Text{
          		id: buttonLabel4
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
+
          		text: "TV"
      		}
 		anchors {
 			top: simplebutton2.bottom
 			topMargin: 3
 			left: simplebutton3.right
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 3 : 2 		
 		}
 
     		MouseArea{
@@ -115,18 +126,20 @@ Tile {
 	Rectangle {
      		id: simplebutton5
      		color: "magenta"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42
 		radius: 4    		     		
 		Text{
          		id: buttonLabel5
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
          		text: "NET"
      		}
 		anchors {
 			top: simplebutton2.bottom
 			topMargin: 3
 			left: simplebutton4.right
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 3 : 2 		
 		}
 
     		MouseArea{
@@ -140,18 +153,21 @@ Tile {
 	Rectangle {
      		id: simplebutton6
      		color: "cyan"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42
 		radius: 4    		     		
 		Text{
          		id: buttonLabel6
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
+
          		text: "BT"
      		}
 		anchors {
 			top: simplebutton2.bottom
 			topMargin: 3
 			left: simplebutton5.right
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 3 : 2 		
 		}
 
     		MouseArea{
@@ -165,18 +181,21 @@ Tile {
 	Rectangle {
      		id: simplebutton61
      		color: "grey"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42 
 		radius: 4    		     		
 		Text{
          		id: buttonLabel61
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
+
          		text: "<>"
      		}
 		anchors {
 			top: simplebutton2.bottom
 			topMargin: 3
 			left: simplebutton5.right
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 3 : 2 		
 		}
 
     		MouseArea{
@@ -191,24 +210,27 @@ Tile {
 	Rectangle {
      		id: simplebutton7
      		color: "grey"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42 
 		radius: 4    		     		
 		Text{
          		id: buttonLabel7
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
+
          		text: app.radioStation1
      		}
 		anchors {
 			top: simplebutton3.bottom
 			topMargin: 3
 			left: parent.left
-			leftMargin:  5		
+			leftMargin:  isNxt ? 8 : 5 		
 		}
 
     		MouseArea{
          		id: buttonMouseArea7
          		anchors.fill: parent 
-         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS03");}
+         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS" + app.radioStation1nr);}
      		}
     		visible: !dimState && !app.actSelector && app.actPower && app.actRadio 
 	}
@@ -216,24 +238,26 @@ Tile {
 	Rectangle {
      		id: simplebutton8
      		color: "grey"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42 
 		radius: 4    		     		
 		Text{
          		id: buttonLabel8
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
          		text: app.radioStation2
      		}
 		anchors {
 			top: simplebutton3.bottom
 			topMargin: 3
 			left: simplebutton7.right
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 3 : 2 		
 		}
 
     		MouseArea{
          		id: buttonMouseArea8
          		anchors.fill: parent 
-         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS04");}
+         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS" + app.radioStation2nr);}
      		}
     		visible: !dimState && !app.actSelector && app.actPower && app.actRadio 
 	}
@@ -241,24 +265,26 @@ Tile {
 	Rectangle {
      		id: simplebutton9
      		color: "grey"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42 
 		radius: 4    		     		
 		Text{
          		id: buttonLabel9
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
          		text: app.radioStation3
      		}
 		anchors {
 			top: simplebutton3.bottom
 			topMargin: 3
 			left: simplebutton8.right
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 3 : 2 		
 		}
 
     		MouseArea{
          		id: buttonMouseArea9
          		anchors.fill: parent 
-         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS06");}
+         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS"  + app.radioStation3nr);}
      		}
     		visible: !dimState && !app.actSelector && app.actPower && app.actRadio
 
@@ -267,24 +293,26 @@ Tile {
 	Rectangle {
      		id: simplebutton10
      		color: "grey"
-     		width: 53; height: 42 
+     		width: isNxt ? 66 : 53; height: isNxt ? 53 : 42 
 		radius: 4    		     		
 		Text{
          		id: buttonLabel10
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
          		text: app.radioStation4
      		}
 		anchors {
 			top: simplebutton3.bottom
 			topMargin: 3
 			left: simplebutton9.right
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 3 : 2 		
 		}
 
     		MouseArea{
          		id: buttonMouseArea10
          		anchors.fill: parent 
-         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS08");}
+         		onClicked: {app.simpleSynchronous(app.domoticzURL1 + "/json.htm?type=command&param=onkyoeiscpcommand&idx=" + app.idxCOM +"&action=PRS"  + app.radioStation4nr);}
      		}
     		visible: !dimState && !app.actSelector && app.actPower && app.actRadio
 	}
@@ -292,11 +320,13 @@ Tile {
 	Rectangle {
      		id: itemText
      		color: "transparent"
-     		width: 160; height: 42     		
+		width: isNxt ? 200 : 160; height: isNxt ? 53 : 42
 		Text{
          		id: iText
          		width: parent.width
-			font.pixelSize: app.actualArtistLong||!dimState? 12 : 22
+			//font.pixelSize: app.actualArtistLong||!dimState? 12 : 22
+			font.pixelSize: ((app.actualTitleLong||!dimState) && !isNxt)? 12 : 22
+
 			wrapMode: Text.WordWrap
          		text: app.actualArtist
 			font.family: qfont.regular.name
@@ -307,7 +337,7 @@ Tile {
 			top: app.showButtons? simplebutton6.bottom : simplebutton.bottom
 			topMargin: 3
 			left: parent.left
-			leftMargin:  2		
+			leftMargin:  isNxt ? 3 : 2		
 		}
     		visible: app.actSelector && app.actPower && !app.showButtons && (app.enableSleep||!dimState)
 
@@ -316,11 +346,13 @@ Tile {
 	Rectangle {
      		id: titleText
      		color: "transparent"
-     		width: 160; height: 42     		
+     		width: isNxt ? 200 : 160; height: isNxt ? 53 : 42     		
 		Text{
          		id: tText
          		width: parent.width
-			font.pixelSize: app.actualTitleLong||!dimState? 12 : 22
+			//font.pixelSize: app.actualTitleLong||!isNxt||!dimState?app.actualTitleLong||isNxt||!dimState?  12 : 22 : 22
+			font.pixelSize: ((app.actualTitleLong||!dimState) && !isNxt)? 12 : 22 
+
 			wrapMode: Text.WordWrap
          		text: app.actualTitle
 			font.family: qfont.regular.name
@@ -331,7 +363,7 @@ Tile {
 			top: itemText.bottom
 			topMargin: 2
 			left: parent.left
-			leftMargin:  2		
+			leftMargin:  isNxt ? 3 : 2		
 		}
     		visible: app.actSelector && app.actPower && !app.showButtons && (app.enableSleep||!dimState)
 	}
@@ -340,7 +372,7 @@ Tile {
 		id:timeText
 
 		text: app.actualPlaytime
-		font.pixelSize:  12
+		font.pixelSize:  isNxt ? 15 :12
 		font.family: qfont.regular.name
 		font.bold: false
 		color: colors.clockTileColor
@@ -361,7 +393,7 @@ Tile {
 			bottom: parent.bottom
 			bottomMargin: 5
 			left: parent.left
-			leftMargin:  2 		
+			leftMargin:  isNxt ? 6 : 2  		
 		}
 
 		iconSource: "qrc:/tsc/volume_down_small.png"
@@ -375,7 +407,7 @@ Tile {
 		id: prevButton
 		anchors {
 			left: volumeDown.right
-			leftMargin:  2 
+			leftMargin:  isNxt ? 3 : 2 
 			bottom: parent.bottom
 			bottomMargin: 5
 		}
@@ -391,7 +423,7 @@ Tile {
 		id: playButton
 		anchors {
 			left: prevButton.right
-			leftMargin:  2 
+			leftMargin:  isNxt ? 3 : 2 
 			bottom: parent.bottom
 			bottomMargin: 5
 		}
@@ -407,7 +439,7 @@ Tile {
 		id: shuffleOnButton
 		anchors {
 			left: playButton.right
-			leftMargin:  2 
+			leftMargin:  isNxt ? 3 : 2 
 			bottom: parent.bottom
 			bottomMargin: 5
 		}
@@ -425,7 +457,7 @@ Tile {
 		id: nextButton
 		anchors {
 			left: shuffleOnButton.right
-			leftMargin:  2 
+			leftMargin:  isNxt ? 3 : 2 
 			bottom: parent.bottom
 			bottomMargin: 5
 
@@ -442,7 +474,7 @@ Tile {
 		id: volumeUp
 		anchors {
 			left: nextButton.right
-			leftMargin: 2
+			leftMargin: isNxt ? 3 : 2
 			bottom: parent.bottom
 			bottomMargin: 5
 		}
@@ -457,11 +489,13 @@ Tile {
 	Rectangle {
      		id: simplebutton11
      		color: "grey"
-     		width: 50; height: 20 
+		width: isNxt ? 65 : 50; height: isNxt ? 25 : 20
 		radius: 4    		     		
 		Text{
          		id: buttonLabel11
          		anchors.centerIn: parent
+			font.pixelSize:  isNxt ? 20 : 16
+			font.family: qfont.regular.name
          		text: "Setup"
      		}
 		anchors {
