@@ -181,9 +181,8 @@ function makeHex(statnr) {
 		leftText: "Domoticz URL"
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: myLabel.bottom
-			leftMargin: 20
 			topMargin: 10
 		}
 
@@ -200,9 +199,8 @@ function makeHex(statnr) {
 		font.family: qfont.regular.name
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: domoticzURL1.bottom
-			leftMargin: 20
 			topMargin: 30
 		}
 	}
@@ -215,9 +213,8 @@ function makeHex(statnr) {
 		leftText: "Master power"
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: myLabel2.bottom
-			leftMargin: 20
 			topMargin: 6
 		}
 
@@ -235,9 +232,8 @@ function makeHex(statnr) {
 		leftText: "Master selector"
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: idxOnOff.bottom
-			leftMargin: 20
 			topMargin: 6
 		}
 
@@ -254,9 +250,8 @@ function makeHex(statnr) {
 		leftText: "Master Volume"
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: idxMS.bottom
-			leftMargin: 20
 			topMargin: 6
 		}
 
@@ -273,9 +268,8 @@ function makeHex(statnr) {
 		leftText: "Onkyo Title Name"
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: idxCOM.bottom
-			leftMargin: 20
 			topMargin: 6
 		}
 
@@ -292,9 +286,8 @@ function makeHex(statnr) {
 		leftText: "Playback time"
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: idxTitle.bottom
-			leftMargin: 20
 			topMargin: 6
 		}
 
@@ -311,10 +304,9 @@ function makeHex(statnr) {
 		leftText: "Onkyo Artist"
 
 		anchors {
-			left: parent.left
+			left: myLabel.left
 			top: idxPT.bottom
-			leftMargin: 20
-			topMargin: 10
+			topMargin: 6
 		}
 
 		onClicked: {

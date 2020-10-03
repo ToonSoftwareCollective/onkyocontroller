@@ -1,5 +1,5 @@
 //
-// Onkyocontroller v1.0.5 by Oepi-Loepi
+// Onkyocontroller v1.0.7 by Oepi-Loepi
 //
 //domoticzURL1 : "http://192.168.10.185:8080" ,,  idxOnOff : "94" ,, idxMS : "92" ,,  idxCOM : "95" ,, idxTitle : "101"  ,, idxPT : "102"  ,, idxArtist : "104"
 
@@ -289,7 +289,7 @@ App {
 			"tmpSleep" : tmpSleep
 		}
   		var doc3 = new XMLHttpRequest();
-   		doc3.open("PUT", "file:////mnt/data/tsc/onkyocontroller_userSettings.json");
+   		doc3.open("PUT", "file:///mnt/data/tsc/onkyocontroller_userSettings.json");
    		doc3.send(JSON.stringify(setJson));
 	}
 
