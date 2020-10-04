@@ -1,3 +1,13 @@
+1.1.0
+New combined version. Possible to switch between Domoticz mode and esp mode. Websockets needed!
+
+1.0.8
+New version to combine in a later stage. OnkyocontrollerScreen added.
+
+
+1.0.7
+Changed saving of config file
+
 1.0.6
 Changed layout for Toon 2. All tested on Toon1 and Toon2
 
@@ -18,5 +28,12 @@ Changed layout for Toon 2. All tested on Toon1 and Toon2
 
 1.0.0
 - First Release:
+
+
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
 
 
