@@ -1,3 +1,10 @@
+1.1.0
+New combined version. Possible to switch between Domoticz mode and esp mode. Websockets needed!
+
+1.0.8
+New version to combine in a later stage. OnkyocontrollerScreen added.
+
+
 1.0.7
 Changed saving of config file
 

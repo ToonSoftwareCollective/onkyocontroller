@@ -4,13 +4,29 @@ import BasicUIControls 1.0;
 
 Screen {
 	id: onkyocontrollerConfigScreen
-	screenTitle: "Onkyocontroller app Setup"
+	screenTitle: "Controller for Onkyo & Pioneer Setup"
+
+
+	function saveespURL(text) {
+		if (text) {
+			app.socketURL = "ws://" + text + ":81"
+			app.espIP = text;
+		}
+	}
+
 
 	function saveDomoticzURL1(text) {
 		if (text) {
 			app.domoticzURL1 = text;
 		}
 	}
+
+	function saveOnkyoURL(text) {
+		if (text) {
+			app.onkyoURL = text;
+		}
+	}
+
 
 	function saveidxOnOff(text) {
 		if (text) {
@@ -48,107 +64,24 @@ Screen {
 		}
 	}
 
-function makeHex(statnr) {
-		if (statnr) {
-			if (!statnr.isNumber){app.statnrHEX = "01"}
-			if ((statnr === "1") || (statnr === "01")) {app.statnrHEX = "01"}
-			if ((statnr === "2") || (statnr === "02")) {app.statnrHEX = "02"}
-			if ((statnr === "3") || (statnr === "03")) {app.statnrHEX = "03"}
-			if ((statnr === "4") || (statnr === "04")) {app.statnrHEX = "04"}
-			if ((statnr === "5") || (statnr === "05")) {app.statnrHEX = "05"}
-			if ((statnr === "6") || (statnr === "06")) {app.statnrHEX = "06"}
-			if ((statnr === "7") || (statnr === "07")) {app.statnrHEX = "07"}
-			if ((statnr === "8") || (statnr === "08")) {app.statnrHEX = "08"}
-			if ((statnr === "9") || (statnr === "09")) {app.statnrHEX = "09"}
-			if ((statnr === "10") || (statnr === "0A")) {app.statnrHEX = "0A"}
-			if ((statnr === "11") || (statnr === "0B")) {app.statnrHEX = "0B"}
-			if ((statnr === "12") || (statnr === "0C")) {app.statnrHEX = "0C"}
-			if ((statnr === "13") || (statnr === "0D")) {app.statnrHEX = "0D"}
-			if ((statnr === "14") || (statnr === "0E")) {app.statnrHEX = "0E"}
-			if ((statnr === "15") || (statnr === "0F")) {app.statnrHEX = "0F"}
-			if ((statnr === "16") || (statnr === "10")) {app.statnrHEX = "10"}
-			if ((statnr === "17") || (statnr === "1A")) {app.statnrHEX = "1A"}
-			if ((statnr === "18") || (statnr === "1B")) {app.statnrHEX = "1B"}
-			if ((statnr === "19") || (statnr === "1C")) {app.statnrHEX = "1C"}
-			if ((statnr === "20") || (statnr === "1D")) {app.statnrHEX = "1D"}
-		}
-
-	}
-
-	function saveradioStation1nr(text) {
+	function saveidxAlbum(text) {
 		if (text) {
-			makeHex(text);
-			app.radioStation1nr = app.statnrHEX;
-		}
-	}
-
-	function saveradioStation2nr(text) {
-		if (text) {
-			makeHex(text);
-			app.radioStation2nr = app.statnrHEX;
-
-		}
-	}
-
-	function saveradioStation3nr(text) {
-		if (text) {
-			makeHex(text);
-			app.radioStation3nr = app.statnrHEX;
-		}
-	}
-
-	function saveradioStation4nr(text) {
-		if (text) {
-			makeHex(text);
-			app.radioStation4nr = app.statnrHEX;
-
-		}
-	}
-
-
-	function saveradioStation1(text) {
-		if (text) {
-			app.radioStation1 = text;
-		}
-	}
-
-	function saveradioStation2(text) {
-		if (text) {
-			app.radioStation2 = text;
-		}
-	}
-
-	function saveradioStation3(text) {
-		if (text) {
-			app.radioStation3 = text;
-		}
-	}
-
-	function saveradioStation4(text) {
-		if (text) {
-			app.radioStation4 = text;
+			app.idxAlbum = text;
 		}
 	}
 
 	onShown: {
+		enableDomMode.isSwitchedOn = app.domMode;
+		espIP.inputText = app.espIP;
 		domoticzURL1.inputText = app.domoticzURL1;
+		onkyoURL.inputText = app.onkyoURL;
 		idxOnOff.inputText = app.idxOnOff;
 		idxMS.inputText = app.idxMS;
 		idxCOM.inputText = app.idxCOM;
 		idxTitle.inputText = app.idxTitle;
 		idxPT.inputText = app.idxPT;
 		idxArtist.inputText = app.idxArtist;
-
-		radioStation1nr.inputText = app.radioStation1nr;
-		radioStation2nr.inputText = app.radioStation2nr;
-		radioStation3nr.inputText = app.radioStation3nr;
-		radioStation4nr.inputText = app.radioStation4nr;
-
-		radioStation1.inputText = app.radioStation1;
-		radioStation2.inputText = app.radioStation2;
-		radioStation3.inputText = app.radioStation3;
-		radioStation4.inputText = app.radioStation4;
-
+		idxAlbum.inputText = app.idxAlbum;
 		enableSleepToggle.isSwitchedOn = app.enableSleep;
 
 		addCustomTopRightButton("Save");
@@ -160,17 +93,102 @@ function makeHex(statnr) {
 	}
 
 	Text {
+		id: domModeTXT
+		width:  160
+		text: "Domoticz Mode, requires Domoticz"
+		font.pixelSize:  isNxt ? 20 : 16
+		font.family: qfont.regular.name
+
+		anchors {
+			left: parent.left
+			leftMargin: 20
+			top:parent.top		
+		}
+	}
+
+	OnOffToggle {
+		id: enableDomMode
+		height:  30
+		leftIsSwitchedOn: true
+		anchors {
+			left: domModeTXT.right
+			leftMargin: isNxt ? 200 : 145
+			top: domModeTXT.top		
+		}
+
+		onSelectedChangedByUser: {
+			if (isSwitchedOn) {
+				app.domMode = true;
+			} else {
+				app.domMode = false;
+			}
+		}
+	}
+
+	Text {
+		id: domModeTXT2
+		width:  160
+		text: "ESP Socket Mode, required flashed Wemos D1 Mini"
+		font.pixelSize:  isNxt ? 20 : 16
+		font.family: qfont.regular.name
+
+		anchors {
+			left: enableDomMode.right
+			leftMargin: isNxt ? 65 : 25
+			top: domModeTXT.top		
+		}
+	}
+
+	Text {
 		id: myLabel
+		text: "IP adress of  esp8266 controller (example:192.168.10.65)"
+		font.pixelSize:  isNxt ? 20 : 16
+		font.family: qfont.regular.name
+
+		anchors {
+			left: parent.left
+			top: domModeTXT.bottom		
+			leftMargin: 20
+			topMargin: 10
+		}
+		visible: !app.domMode
+	}
+
+	EditTextLabel4421 {
+		id: espIP
+		width: parent.width - 40
+		height: 35
+		leftTextAvailableWidth: 300
+		leftText: "esp8266 IP"
+
+		anchors {
+			left: myLabel.left
+			top: myLabel.bottom
+			topMargin: 10
+		}
+
+		onClicked: {
+			qkeyboard.open("IP adress of esp8266 controller", espIP.inputText, saveespURL)
+		}
+		visible: !app.domMode
+	}
+
+
+
+
+	Text {
+		id: myLabel88
 		text: "URL to Domoticz (example: http://192.168.10.185:8080)"
 		font.pixelSize:  isNxt ? 20 : 16
 		font.family: qfont.regular.name
 
 		anchors {
 			left: parent.left
-			top: parent.top			
+			top: domModeTXT.bottom		
 			leftMargin: 20
 			topMargin: 10
 		}
+		visible: app.domMode
 	}
 
 	EditTextLabel4421 {
@@ -189,302 +207,44 @@ function makeHex(statnr) {
 		onClicked: {
 			qkeyboard.open("URL to Domoticz incl. Port", domoticzURL1.inputText, saveDomoticzURL1)
 		}
+		visible: app.domMode
 	}
 
 
 	Text {
-		id: myLabel2
-		text: "IDX from Domoticz (Devices Tab) :"
+		id: myLabel66
+		text: "URL of Onkyo/Pioneer Receiver (example: http://192.168.10.241)"
 		font.pixelSize:  isNxt ? 20 : 16
 		font.family: qfont.regular.name
 
 		anchors {
-			left: myLabel.left
-			top: domoticzURL1.bottom
-			topMargin: 30
+			left: parent.left
+			top: domoticzURL1.bottom			
+			leftMargin: 20
+			topMargin: 10
 		}
+		visible: app.domMode
 	}
 
 	EditTextLabel4421 {
-		id: idxOnOff
-		width: (parent.width*0.4) - 40		
-		height: 35		
-		leftTextAvailableWidth: 200
-		leftText: "Master power"
+		id: onkyoURL
+		width: parent.width - 40
+		height: 35
+		leftTextAvailableWidth: 300
+		leftText: "Onkyo/Pioneer URL"
 
 		anchors {
 			left: myLabel.left
-			top: myLabel2.bottom
-			topMargin: 6
+			top: myLabel66.bottom
+			topMargin: 10
 		}
 
 		onClicked: {
-			qkeyboard.open("Master Power", idxOnOff.inputText, saveidxOnOff)
+			qkeyboard.open("URL of Onkyo receiver", onkyoURL.inputText, saveOnkyoURL)
 		}
+		visible: app.domMode
 	}
-
-
-	EditTextLabel4421 {
-		id: idxMS
-		width: (parent.width*0.4) - 40		
-		height: 35		
-		leftTextAvailableWidth: 200
-		leftText: "Master selector"
-
-		anchors {
-			left: myLabel.left
-			top: idxOnOff.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Master selector", idxMS.inputText, saveidxMS)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: idxCOM
-		width: (parent.width*0.4) - 40		
-		height: 35		
-		leftTextAvailableWidth: 200
-		leftText: "Master Volume"
-
-		anchors {
-			left: myLabel.left
-			top: idxMS.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Master Volume", idxCOM.inputText, saveidxCOM)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: idxTitle
-		width: (parent.width*0.4) - 40		
-		height: 35		
-		leftTextAvailableWidth: 200
-		leftText: "Onkyo Title Name"
-
-		anchors {
-			left: myLabel.left
-			top: idxCOM.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Onkyo Title Name", idxTitle.inputText, saveidxTitle)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: idxPT
-		width: (parent.width*0.4) - 40		
-		height: 35		
-		leftTextAvailableWidth: 200
-		leftText: "Playback time"
-
-		anchors {
-			left: myLabel.left
-			top: idxTitle.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Playback time", idxPT.inputText, saveidxPT)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: idxArtist
-		width: (parent.width*0.4) - 40		
-		height: 35		
-		leftTextAvailableWidth: 200
-		leftText: "Onkyo Artist"
-
-		anchors {
-			left: myLabel.left
-			top: idxPT.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Onkyo Artist", idxArtist.inputText, saveidxArtist)
-		}
-	}
-
 ////////////////////////////////////////////////////////////////////////
-	Text {
-		id: myLabel229
-		text: "Radio Nr (2 number \"01\" to \"09\"):"
-		font.pixelSize:  isNxt ? 20 : 16
-		font.family: qfont.regular.name
-
-		anchors {
-			left: idxArtist.right
-			top: domoticzURL1.bottom
-			leftMargin: 20
-			topMargin: 30
-		}
-	}
-
-	EditTextLabel4421 {
-		id: radioStation1nr
-		width: (parent.width*0.37) - 40		
-		height: 35
-		leftTextAvailableWidth: 200
-		leftText: "Radiostation 1 Nr"
-
-		anchors {
-			left: myLabel229.left
-			top: myLabel2.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 1 Nr \"01\" to \"09\"", radioStation1nr.inputText, saveradioStation1nr)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: radioStation2nr
-		width: (parent.width*0.37) - 40
-		height: 35
-		leftTextAvailableWidth: 200
-
-		leftText: "Radiostation 2 Nr"
-
-		anchors {
-			left: myLabel229.left
-			top: radioStation1nr.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 2 Nr \"01\" to \"09\"", radioStation2nr.inputText, saveradioStation2nr)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: radioStation3nr
-		width: (parent.width*0.37) - 40
-		height: 35
-		leftTextAvailableWidth: 200
-		leftText: "Radiostation 3 Nr"
-
-		anchors {
-			left: myLabel229.left
-			top: radioStation2nr.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 3 Nr \"01\" to \"09\"", radioStation3nr.inputText, saveradioStation3nr)
-		}
-	}
-
-
-	EditTextLabel4421 {
-		id: radioStation4nr
-		width: (parent.width*0.37) - 40
-		height: 35
-		leftTextAvailableWidth: 200
-		leftText: "Radiostation 4 Nr"
-
-		anchors {
-			left: myLabel229.left
-			top: radioStation3nr.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 4 Nr \"01\" to \"09\"", radioStation4nr.inputText, saveradioStation4nr)
-		}
-	}
-///////////////////////////////////////////////////////////////////////////
-	Text {
-		id: myLabel22
-		text: "Name (3 Letter, e.g. \"R10\"):"
-		font.pixelSize:  isNxt ? 20 : 16
-		font.family: qfont.regular.name
-
-		anchors {
-			left: radioStation1nr.right
-			top: domoticzURL1.bottom
-			leftMargin: 20
-			topMargin: 30
-		}
-	}
-
-	EditTextLabel4421 {
-		id: radioStation1
-		width: (parent.width*0.25) - 40
-		height: 35
-		leftTextAvailableWidth: 200
-
-		anchors {
-			left: myLabel22.left
-			top: myLabel2.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 1 Name (3 Letter)", radioStation1.inputText, saveradioStation1)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: radioStation2
-		width: (parent.width*0.25) - 40
-		height: 35
-		leftTextAvailableWidth: 200
-
-		anchors {
-			left: myLabel22.left
-			top: radioStation1.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 2 Name (3 Letter)", radioStation2.inputText, saveradioStation2)
-		}
-	}
-
-	EditTextLabel4421 {
-		id: radioStation3
-		width: (parent.width*0.25) - 40
-		height: 35
-		leftTextAvailableWidth: 200
-
-		anchors {
-			left: myLabel22.left
-			top: radioStation2.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 3 Name (3 Letter)", radioStation3.inputText, saveradioStation3)
-		}
-	}
-
-
-	EditTextLabel4421 {
-		id: radioStation4
-		width: (parent.width*0.25) - 40
-		height: 35
-		leftTextAvailableWidth: 200
-
-		anchors {
-			left: myLabel22.left
-			top: radioStation3.bottom
-			topMargin: 6
-		}
-
-		onClicked: {
-			qkeyboard.open("Radiostation 4 Name (3 Letter)", radioStation4.inputText, saveradioStation4)
-		}
-	}
 
 	Text {
 		id: showInSleep
@@ -494,9 +254,9 @@ function makeHex(statnr) {
 		font.family: qfont.regular.name
 
 		anchors {
-			left: myLabel229.left
-			top: radioStation4.bottom
-			topMargin: 30
+			left: myLabel.left
+			top: onkyoURL.bottom
+			topMargin: 10
 		}
 	}
 
@@ -515,6 +275,160 @@ function makeHex(statnr) {
 			}
 		}
 	}
+
+////////////////////////////////////////////////////////////////////////
+
+	Text {
+		id: myLabel2
+		text: "IDX from Domoticz (Devices Tab) :"
+		font.pixelSize:  isNxt ? 20 : 16
+		font.family: qfont.regular.name
+
+		anchors {
+			left: myLabel.left
+			top: enableSleepToggle.bottom
+			topMargin: 10
+		}
+		visible: app.domMode
+	}
+
+	EditTextLabel4421 {
+		id: idxOnOff
+		width: (parent.width*0.4) - 40		
+		height: 35		
+		leftTextAvailableWidth: 200
+		leftText: "Master power"
+
+		anchors {
+			left: myLabel2.left
+			top: myLabel2.bottom
+			topMargin: 6
+		}
+
+		onClicked: {
+			qkeyboard.open("Master Power", idxOnOff.inputText, saveidxOnOff)
+		}
+		visible: app.domMode
+	}
+
+
+	EditTextLabel4421 {
+		id: idxMS
+		width: (parent.width*0.4) - 40		
+		height: 35		
+		leftTextAvailableWidth: 200
+		leftText: "Master selector"
+
+		anchors {
+			left: myLabel2.left
+			top: idxOnOff.bottom
+			topMargin: 6
+		}
+
+		onClicked: {
+			qkeyboard.open("Master selector", idxMS.inputText, saveidxMS)
+		}
+		visible: app.domMode
+	}
+
+	EditTextLabel4421 {
+		id: idxCOM
+		width: (parent.width*0.4) - 40		
+		height: 35		
+		leftTextAvailableWidth: 200
+		leftText: "Master Volume"
+
+		anchors {
+			left: myLabel2.left
+			top: idxMS.bottom
+			topMargin: 6
+		}
+
+		onClicked: {
+			qkeyboard.open("Master Volume", idxCOM.inputText, saveidxCOM)
+		}
+		visible: app.domMode
+	}
+
+	EditTextLabel4421 {
+		id: idxTitle
+		width: (parent.width*0.4) - 40		
+		height: 35		
+		leftTextAvailableWidth: 200
+		leftText: "Title Name"
+
+		anchors {
+			left: myLabel2.left
+			top: idxCOM.bottom
+			topMargin: 6
+		}
+
+		onClicked: {
+			qkeyboard.open("Title Name", idxTitle.inputText, saveidxTitle)
+		}
+		visible: app.domMode
+	}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	EditTextLabel4421 {
+		id: idxPT
+		width: (parent.width*0.4) - 40		
+		height: 35		
+		leftTextAvailableWidth: 200
+		leftText: "Playback time"
+
+		anchors {
+			left: idxOnOff.right
+			top: idxOnOff.top
+			leftMargin: 60
+		}
+
+		onClicked: {
+			qkeyboard.open("Playback time", idxPT.inputText, saveidxPT)
+		}
+		visible: app.domMode
+	}
+
+	EditTextLabel4421 {
+		id: idxArtist
+		width: (parent.width*0.4) - 40		
+		height: 35		
+		leftTextAvailableWidth: 200
+		leftText: "Artist"
+
+		anchors {
+			left: idxPT.left
+			top: idxPT.bottom
+			topMargin: 6
+		}
+
+		onClicked: {
+			qkeyboard.open("Artist", idxArtist.inputText, saveidxArtist)
+		}
+		visible: app.domMode
+	}
+
+	EditTextLabel4421 {
+		id: idxAlbum
+		width: (parent.width*0.4) - 40		
+		height: 35		
+		leftTextAvailableWidth: 200
+		leftText: "Album"
+
+		anchors {
+			left: idxPT.left
+			top: idxArtist.bottom
+			topMargin: 6
+		}
+
+		onClicked: {
+			qkeyboard.open("Album", idxAlbum.inputText, saveidxAlbum)
+		}
+		visible: app.domMode
+	}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 }
