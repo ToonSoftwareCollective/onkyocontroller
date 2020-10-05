@@ -1,3 +1,6 @@
+1.1.1
+Minor change. Sometimes wrong info was given if Domoticz and websockets were availabele in settings and Domoticz freezed up
+
 1.1.0
 New combined version. Possible to switch between Domoticz mode and esp mode. Websockets needed!
 

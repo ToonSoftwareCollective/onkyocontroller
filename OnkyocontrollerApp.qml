@@ -124,197 +124,200 @@ App {
 
 
 	function writewebsockettovars(webmessage) {
-	try {
-		var JsonObject4= JSON.parse(webmessage);
+		if (!domMode){
 
-		actualPower = JsonObject4['power1'];
+			try {
+				var JsonObject4= JSON.parse(webmessage);
 
-		if ((actualPower == '01') || (actualPower == "01")) {
-			actPower = true;
-		}else{
-			actPower = false;
-			actualTitle = '';
-			actualArtist = '';
-		}
+				actualPower = JsonObject4['power1'];
 
-		actualSelector = JsonObject4['input'];
-		onkyoURL = "http://" + JsonObject4['ip'];
-		actualTitle = JsonObject4['title'];
-		actualArtist = JsonObject4['artist'];
-		actualPlaytime = JsonObject4['timestamp'];
-		actualVolume = JsonObject4['volume'];
-		actualPreset = JsonObject4['preset'];
-		actualTuner = JsonObject4['tuner'];
-		onkyoERRMessage = JsonObject4['status'];
-
-		//24 = radio, 22 phono, 2d airplay, 2e bt, 2b netwerk, 12 tv
-		actFM = false;
-		actPhono = false;
-		actAux = false;
-		actTV = false;
-		actBT = false;
-		actAirplay = false;
-		actNET = false;
-
-		switch (actualSelector) {
-
-			case "24": {
-				actFM=true;
-				break;
-			}
-			case "22": {
-				actPhono=true;
-				actualTitle = "";
-				actualArtist = "";
-				break;
-			}
-			case "2D": {
-				actAirplay=true;
-				break;
-			}
-			case "2E": {
-				actBT=true;
-				break;
-			}
-			case "2B": {
-				actNET=true;
-				break;
-				}
-			case '2B': {
-				actNET=true;
-				break;
+				if ((actualPower == '01') || (actualPower == "01")) {
+					actPower = true;
+				}else{
+					actPower = false;
+					actualTitle = '';
+					actualArtist = '';
 				}
 
-			case "12": {
-				actTV=true;
-				actualTitle = "";
-				actualArtist = "";
-				break;
+				actualSelector = JsonObject4['input'];
+				onkyoURL = "http://" + JsonObject4['ip'];
+				actualTitle = JsonObject4['title'];
+				actualArtist = JsonObject4['artist'];
+				actualPlaytime = JsonObject4['timestamp'];
+				actualVolume = JsonObject4['volume'];
+				actualPreset = JsonObject4['preset'];
+				actualTuner = JsonObject4['tuner'];
+				onkyoERRMessage = JsonObject4['status'];
+
+				//24 = radio, 22 phono, 2d airplay, 2e bt, 2b netwerk, 12 tv
+				actFM = false;
+				actPhono = false;
+				actAux = false;
+				actTV = false;
+				actBT = false;
+				actAirplay = false;
+				actNET = false;
+
+				switch (actualSelector) {
+
+					case "24": {
+						actFM=true;
+						break;
+					}
+					case "22": {
+						actPhono=true;
+						actualTitle = "";
+						actualArtist = "";
+						break;
+					}
+					case "2D": {
+						actAirplay=true;
+						break;
+					}
+					case "2E": {
+						actBT=true;
+						break;
+					}
+					case "2B": {
+						actNET=true;
+						break;
+						}
+					case '2B': {
+						actNET=true;
+						break;
+						}
+
+					case "12": {
+						actTV=true;
+						actualTitle = "";
+						actualArtist = "";
+						break;
+					}
+					 case "03": {
+						actAUX=true;
+						actualTitle = "";
+						actualArtist = "";
+						break;
+					}
+					default: {
+						break;
+					}
+				}
+
+				if (actualTitle.length > 22) {
+					actualTitleLong = true;
+				}else{
+					actualTitleLong = false;
+				}
+
+				if (actualArtist.length > 22) {
+					actualArtistLong = true;
+				}else{
+					actualArtistLong = false;
+				}
+
+
+			} catch(e) {
 			}
-			 case "03": {
-				actAUX=true;
-				actualTitle = "";
-				actualArtist = "";
-				break;
-			}
-			default: {
-				break;
-			}
+
 		}
-
-		if (actualTitle.length > 22) {
-			actualTitleLong = true;
-		}else{
-			actualTitleLong = false;
-		}
-
-		if (actualArtist.length > 22) {
-			actualArtistLong = true;
-		}else{
-			actualArtistLong = false;
-		}
-
-
-	} catch(e) {
-	}
-
 	}
 
 /////////////////////////////////DOMOTICZ OPTION///////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 	function readOnkyoState() {
-
-		var xmlhttp4 = new XMLHttpRequest();
-		xmlhttp4.onreadystatechange=function() {
-			if (xmlhttp4.readyState == XMLHttpRequest.DONE) {
-				if (xmlhttp4.status == 200) {
-						var JsonString4 = xmlhttp4.responseText;
-        					var JsonObject4= JSON.parse(JsonString4);
-						actualPower = JsonObject4.result[0].Data;
-						if (actualPower == 'On') {
-							actPower = true;
-						}else{
-							actPower = false;
-							actualTitle = "";
-							actualArtist = "";
-						}
-				}
-			}
-		}
-		xmlhttp4.open("GET", domoticzURL1 + "/json.htm?type=devices&rid=" + idxOnOff);
-		xmlhttp4.send();
-
-		if (actPower){
-			var xmlhttp5 = new XMLHttpRequest();
-			xmlhttp5.onreadystatechange=function() {
-				if (xmlhttp5.readyState == XMLHttpRequest.DONE) {
-					if (xmlhttp5.status == 200) {
-							var JsonString5 = xmlhttp5.responseText;
-        						var JsonObject5= JSON.parse(JsonString5);
-							actualSelector = JsonObject5.result[0].Data;
-
-							actFM = false;
-							actPhono = false;
-							actAux = false;
-							actTV = false;
-							actBT = false;
-							actAirplay = false;
-							actNET = false;
-							
-							switch (actualSelector) {
-								case "Set Level: 80 %": {
-									actFM=true;
-									break;
-								}
-								case "Set Level: 110 %": {
-									actPhono=true;
-									actualTitle = "";
-									actualArtist = "";
-									break;
-								}
-								case "Set Level: 190 %": {
-									actAirplay=true;
-									break;
-								}
-								case "Set Level: 130 %": {
-									actBT=true;
-									break;
-								}
-								case "Set Level: 120 %": {
-									actNET=true;
-									break;
-									}
-
-								case "Set Level: 100 %": {
-									actTV=true;
-									actualTitle = "";
-									actualArtist = "";
-									break;
-								}
-								 case "Set Level: 60 %": {
-									actAUX=true;
-									actualTitle = "";
-									actualArtist = "";
-									break;
-								}
-								default: {
-									break;
-								}
+		if (domMode){
+			var xmlhttp4 = new XMLHttpRequest();
+			xmlhttp4.onreadystatechange=function() {
+				if (xmlhttp4.readyState == XMLHttpRequest.DONE) {
+					if (xmlhttp4.status == 200) {
+							var JsonString4 = xmlhttp4.responseText;
+								var JsonObject4= JSON.parse(JsonString4);
+							actualPower = JsonObject4.result[0].Data;
+							if (actualPower == 'On') {
+								actPower = true;
+							}else{
+								actPower = false;
+								actualTitle = "";
+								actualArtist = "";
 							}
 					}
 				}
 			}
-			xmlhttp5.open("GET", domoticzURL1 + "/json.htm?type=devices&rid=" + idxMS);
-			xmlhttp5.send();
+			xmlhttp4.open("GET", domoticzURL1 + "/json.htm?type=devices&rid=" + idxOnOff);
+			xmlhttp4.send();
+
+			if (actPower){
+				var xmlhttp5 = new XMLHttpRequest();
+				xmlhttp5.onreadystatechange=function() {
+					if (xmlhttp5.readyState == XMLHttpRequest.DONE) {
+						if (xmlhttp5.status == 200) {
+								var JsonString5 = xmlhttp5.responseText;
+									var JsonObject5= JSON.parse(JsonString5);
+								actualSelector = JsonObject5.result[0].Data;
+
+								actFM = false;
+								actPhono = false;
+								actAux = false;
+								actTV = false;
+								actBT = false;
+								actAirplay = false;
+								actNET = false;
+								
+								switch (actualSelector) {
+									case "Set Level: 80 %": {
+										actFM=true;
+										break;
+									}
+									case "Set Level: 110 %": {
+										actPhono=true;
+										actualTitle = "";
+										actualArtist = "";
+										break;
+									}
+									case "Set Level: 190 %": {
+										actAirplay=true;
+										break;
+									}
+									case "Set Level: 130 %": {
+										actBT=true;
+										break;
+									}
+									case "Set Level: 120 %": {
+										actNET=true;
+										break;
+										}
+
+									case "Set Level: 100 %": {
+										actTV=true;
+										actualTitle = "";
+										actualArtist = "";
+										break;
+									}
+									 case "Set Level: 60 %": {
+										actAUX=true;
+										actualTitle = "";
+										actualArtist = "";
+										break;
+									}
+									default: {
+										break;
+									}
+								}
+						}
+					}
+				}
+				xmlhttp5.open("GET", domoticzURL1 + "/json.htm?type=devices&rid=" + idxMS);
+				xmlhttp5.send();
 
 				var xmlhttp = new XMLHttpRequest();
 				xmlhttp.onreadystatechange=function() {
 					if (xmlhttp.readyState == XMLHttpRequest.DONE) {
 						if (xmlhttp.status == 200) {
 								var JsonString = xmlhttp.responseText;
-        							var JsonObject= JSON.parse(JsonString);
-        							actualTitle = JsonObject.result[0].Data;
+									var JsonObject= JSON.parse(JsonString);
+									actualTitle = JsonObject.result[0].Data;
 								if (actualTitle.length > 22) {
 									actualTitleLong = true;
 								}else{
@@ -332,7 +335,7 @@ App {
 					if (xmlhttp2.readyState == XMLHttpRequest.DONE) {
 						if (xmlhttp2.status == 200) {
 								var JsonString2 = xmlhttp2.responseText;
-        							var JsonObject2= JSON.parse(JsonString2);
+									var JsonObject2= JSON.parse(JsonString2);
 								actualArtist = JsonObject2.result[0].Data;
 								if (actualArtist.length > 22) {
 									actualArtistLong = true;
@@ -350,7 +353,7 @@ App {
 					if (xmlhttp3.readyState == XMLHttpRequest.DONE) {
 						if (xmlhttp3.status == 200) {
 								var JsonString3 = xmlhttp3.responseText;
-        							var JsonObject3= JSON.parse(JsonString3);
+									var JsonObject3= JSON.parse(JsonString3);
 								actualPlaytime = JsonObject3.result[0].Data;
 						}
 					}
@@ -363,8 +366,8 @@ App {
 					if (xmlhttp4.readyState == XMLHttpRequest.DONE) {
 						if (xmlhttp4.status == 200) {
 								var JsonString4 = xmlhttp4.responseText;
-        							var JsonObject4= JSON.parse(JsonString4);
-        							actualVolume = JsonObject4.result[0].Level;
+									var JsonObject4= JSON.parse(JsonString4);
+									actualVolume = JsonObject4.result[0].Level;
 						}
 					}
 				}
@@ -380,14 +383,15 @@ App {
 						if (xmlhttp5.readyState == XMLHttpRequest.DONE) {
 							if (xmlhttp5.status == 200) {
 									var JsonString5 = xmlhttp5.responseText;
-        								var JsonObject5= JSON.parse(JsonString5);
-        								actualTitle = JsonObject5.result[0].Data;
+										var JsonObject5= JSON.parse(JsonString5);
+										actualTitle = JsonObject5.result[0].Data;
 							}
 						}
 					}
 					xmlhttp5.open("GET", domoticzURL1 + "/json.htm?type=devices&rid=" + idxAlbum);
 					xmlhttp5.send();
 				}
+			}
 		}
 	}
 
@@ -445,7 +449,11 @@ App {
 		triggeredOnStart: true
 		running: !domMode
 		repeat: true
-		onTriggered: {webSocketactive = false; webSocketactive = true}
+		onTriggered: 
+				{
+					webSocketactive = false ; 
+					!domMode? webSocketactive = true: webSocketactive = false
+				}
 	}
 
 	Timer {
