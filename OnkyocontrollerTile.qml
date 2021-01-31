@@ -6,6 +6,10 @@ Tile {
 	id: onkyocontrollerTile
 	property bool dimState: screenStateController.dimmedColors
 
+	onClicked: {
+		 stage.openFullscreen(app.onkyocontrollerScreenUrl)
+	}
+
 	NewTextLabel {
 		id: powerButton
 		width: isNxt ? 284 : 220;  
@@ -49,11 +53,7 @@ Tile {
 			topMargin: 1
 			left: powerButton.left
             	}
-		MouseArea{
-			id: buttonMouseArea198
-			anchors.fill: parent 
-			onClicked: {stage.openFullscreen(app.onkyocontrollerScreenUrl);}
-		}
+		
 		visible: ((app.enableSleep||!dimState ))
 	}
 
@@ -76,12 +76,6 @@ Tile {
 			top: itemText.bottom
 			topMargin: 2
 			left: powerButton.left		
-		}
-		MouseArea{
-			id: buttonMouseArea199
-			anchors.fill: parent 
-			onClicked: {stage.openFullscreen(app.onkyocontrollerScreenUrl);}
-
 		}
 		visible: ((app.enableSleep||!dimState ) && app.actPower)
 	}
@@ -112,7 +106,6 @@ Tile {
 			bottom: parent.bottom
 			bottomMargin: 5
 		}
-
 		iconSource: "qrc:/tsc/left.png"
 		onClicked: {
 			app.actFM?

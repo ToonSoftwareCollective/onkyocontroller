@@ -19,6 +19,10 @@ App {
 	property OnkyocontrollerConfigScreen onkyocontrollerConfigScreen
 	property url onkyocontrollerScreenUrl : "OnkyocontrollerScreen.qml"
 	property OnkyocontrollerScreen onkyocontrollerScreen
+	
+	property url trayUrl: "OnkyocontrollerTray.qml"
+	property SystrayIcon onkyocontrollerTray
+	property bool enableSystray : false
 
 	property string	statnrHEX
 	property string actualArtist
@@ -76,6 +80,7 @@ App {
 
 	property string tmpSleep : "No"
 	property string tmpDOM : "No"
+	property string tmpTray : "No"
 
 	property variant onkyocontrollerSettingsJson : {
 		'socketURL': "",
@@ -90,7 +95,8 @@ App {
 		'idxArtist': "",
 		'idxAlbum': "",
 		'tmpDOM': "",
-		'tmpSleep': ""
+		'tmpSleep': "",
+		'enableSystray': ""
 	}
 
 
@@ -182,10 +188,6 @@ App {
 						actNET=true;
 						break;
 						}
-					case '2B': {
-						actNET=true;
-						break;
-						}
 
 					case "12": {
 						actTV=true;
@@ -215,11 +217,10 @@ App {
 				}else{
 					actualArtistLong = false;
 				}
-
-
 			} catch(e) {
 			}
-
+			
+			
 		}
 	}
 
@@ -392,6 +393,7 @@ App {
 					xmlhttp5.send();
 				}
 			}
+
 		}
 	}
 
@@ -425,6 +427,7 @@ App {
 		registry.registerWidget("tile", tileUrl, this, null, {thumbLabel: qsTr("Onkyo"), thumbIcon: thumbnailIcon, thumbCategory: "general", thumbWeight: 30, baseTileWeight: 10, thumbIconVAlignment: "center"});
 		registry.registerWidget("screen", onkyocontrollerConfigScreenUrl, this, "onkyocontrollerConfigScreen");
 		registry.registerWidget("screen", onkyocontrollerScreenUrl, this, "onkyocontrollerScreen");
+		registry.registerWidget("systrayIcon", trayUrl,onkyocontrollerApp);
 	}
 	
 	Connections {
@@ -504,6 +507,16 @@ App {
 
 		} catch(e) {
 		}
+		
+		try {  //this is a separate try because these options are added in a later version
+			onkyocontrollerSettingsJson= JSON.parse(onkyocontrollerSettingsFile.read());
+			if (onkyocontrollerSettingsJson['enableSystray'] == "Yes") {
+					enableSystray = true
+				} else {
+					enableSystray = false
+				}
+		} catch(e) {
+		}
 	}
 
 
@@ -519,6 +532,12 @@ App {
 			tmpDOM = "Yes";
 		} else {
 			tmpDOM = "No";
+		}
+		
+		if (enableSystray == true) {
+			tmpTray = "Yes";
+		} else {
+			tmpTray = "No";
 		}
 
  		var setJson = {
@@ -538,7 +557,9 @@ App {
 			"idxAlbum" : idxAlbum,
 
 			"tmpDOM" : tmpDOM,
-			"tmpSleep" : tmpSleep
+			"tmpSleep" : tmpSleep,
+		
+		"enableSystray" : tmpTray
 		}
   		var doc3 = new XMLHttpRequest();
    		doc3.open("PUT", "file:///mnt/data/tsc/onkyocontroller_userSettings.json");

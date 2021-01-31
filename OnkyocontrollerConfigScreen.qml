@@ -71,20 +71,21 @@ Screen {
 	}
 
 	onShown: {
-		enableDomMode.isSwitchedOn = app.domMode;
-		espIP.inputText = app.espIP;
-		domoticzURL1.inputText = app.domoticzURL1;
-		onkyoURL.inputText = app.onkyoURL;
-		idxOnOff.inputText = app.idxOnOff;
-		idxMS.inputText = app.idxMS;
-		idxCOM.inputText = app.idxCOM;
-		idxTitle.inputText = app.idxTitle;
-		idxPT.inputText = app.idxPT;
-		idxArtist.inputText = app.idxArtist;
-		idxAlbum.inputText = app.idxAlbum;
-		enableSleepToggle.isSwitchedOn = app.enableSleep;
+		enableDomMode.isSwitchedOn = app.domMode
+		espIP.inputText = app.espIP
+		domoticzURL1.inputText = app.domoticzURL1
+		onkyoURL.inputText = app.onkyoURL
+		idxOnOff.inputText = app.idxOnOff
+		idxMS.inputText = app.idxMS
+		idxCOM.inputText = app.idxCOM
+		idxTitle.inputText = app.idxTitle
+		idxPT.inputText = app.idxPT
+		idxArtist.inputText = app.idxArtist
+		idxAlbum.inputText = app.idxAlbum
+		enableSleepToggle.isSwitchedOn = app.enableSleep
 
-		addCustomTopRightButton("Save");
+		enableTrayToggle.isSwitchedOn = app.enableSystray
+		addCustomTopRightButton("Save")
 	}
 
 	onCustomButtonClicked: {
@@ -272,6 +273,39 @@ Screen {
 				app.enableSleep = true;
 			} else {
 				app.enableSleep = false;
+			}
+		}
+	}
+	
+	
+	Text {
+		id: showInTray
+		width:  160
+		text: "Show in System Tray"
+		font.pixelSize:  isNxt ? 20 : 16
+		font.family: qfont.regular.name
+
+		anchors {
+			left: enableSleepToggle.right
+			leftMargin:  isNxt ? 50 : 40
+			top: showInSleep.top
+		}
+	}
+
+	OnOffToggle {
+		id: enableTrayToggle
+		height:  30
+		anchors {
+			left: showInTray.right
+			leftMargin:  isNxt ? 65 : 30
+			top: showInTray.top
+		}
+		leftIsSwitchedOn: false
+		onSelectedChangedByUser: {
+			if (isSwitchedOn) {
+				app.enableSystray = true;
+			} else {
+				app.enableSystray = false;
 			}
 		}
 	}
